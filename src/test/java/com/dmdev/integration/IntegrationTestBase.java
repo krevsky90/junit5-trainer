@@ -21,6 +21,11 @@ public abstract class IntegrationTestBase {
                 UNIQUE (user_id, name)
             );
             """;
+    private static final String INSERT_ALL_SQL = """
+            INSERT INTO subscription (user_id, name, provider, expiration_date, status)
+            VALUES (1, 'Ivan', 'GOOGLE', '2090-01-10', 'ACTIVE'),
+                   (2, 'Petr', 'APPLE', '1995-10-19', 'EXPIRED')
+            """;
 
     @BeforeAll
     static void prepareDatabase() throws SQLException {
@@ -35,6 +40,7 @@ public abstract class IntegrationTestBase {
         try (var connection = ConnectionManager.get();
              var statement = connection.createStatement()) {
             statement.execute(CLEAN_SQL);
+            statement.execute(INSERT_ALL_SQL);
         }
     }
 }

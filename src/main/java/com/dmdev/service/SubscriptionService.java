@@ -32,9 +32,7 @@ public class SubscriptionService {
                 .filter(existingSubscription -> existingSubscription.getName().equals(dto.getName()))
                 .filter(existingSubscription -> existingSubscription.getProvider() == Provider.findByName(dto.getProvider()))
                 .findFirst()
-                .map(existingSubscription -> existingSubscription
-                        .setExpirationDate(dto.getExpirationDate())
-                        .setStatus(Status.ACTIVE))
+                .map(existingSubscription -> existingSubscription.setExpirationDate(dto.getExpirationDate()).setStatus(Status.ACTIVE))
                 .orElseGet(() -> createSubscriptionMapper.map(dto));
 
         return subscriptionDao.upsert(subscription);
